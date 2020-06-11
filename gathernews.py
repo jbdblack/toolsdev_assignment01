@@ -7,65 +7,95 @@
 import nltk
 import newspaper
 
-def userinput:
-	userinput = input("Please enter any keyword(press enter to continue):")
-	return userinput
+
+userinput = input("Please enter any keyword(press enter to continue):")
 
 
-CalNewport_paper = newspaper.build('https://www.calnewport.com/blog', memoize_articles=False)
+#Initialize Newspapers
+NPR_paper = newspaper.build('https://www.npr.org/sections/news/', memoize_articles=False)
 
 edgeNews_paper = newspaper.build('https://www.edge.org/', memoize_articles = False)
 
-AoM_paper = newspaper.build('https://www.artofmanliness.com/', memoize_articles = False)
+cnn_paper = newspaper.build('https://www.cnn.com/', memoize_articles = False)
 
-#Edge Article Scrape
-# for article in edgeNews_paper.articles:
-# 	article.download()
-# 	article.parse()
-# 	article.nlp()
-# 	if userinput in article.keywords:
-# 		print(article.title)
-# 		file = open('news_summary.txt', 'a')
-# 		file.write("Title: " + str(article.title) + "- Author(s): " + str(article.authors)+ '\n' + '\n')
-# 		file.close
-# 	elif not userinput:
-# 		print(article.title)
-# 		file = open('news_summary.txt', 'a')
-# 		file.write("Title: " + str(article.title) + "- Author(s): " + str(article.authors) + '\n' + '\n')
-# 		file.close
+#Function
+def WriteNews(Title, Author, Summary):
+	Document.write("Title: " + Title + "-" + "Author(s)" +str(Author))
+	Document.write(Summary)
+	Document.write('\n' + " ")
+	Document.write('\n')
 
 
 
-#Cal Newport Article Scrape
-# for article in CalNewport_paper.articles:
-# 	article.download()
-# 	article.parse()
-# 	article.nlp()
-# 	if userinput in article.keywords:
-# 		print(article.title)
-# 		file = open('news_summary.txt', 'a')
-# 		file.write("Title: " + str(article.title) + "- Author(s): " + str(article.authors)+ '\n' + '\n')
-# 		file.close
-# 	elif not userinput:
-# 		print(article.title)
-# 		file = open('news_summary.txt', 'a')
-# 		file.write("Title: " + str(article.title) + "- Author(s): " + str(article.authors) + '\n' + '\n')
-# 		file.close
+Document = open('news_summary.txt', 'a')
 
-#AoM Article Scrape
-for article in AoM_paper.articles:
-	article.download()
-	article.parse()
+
+# ##NPR Scrape
+for article in NPR_paper.articles:
+	try:
+			article.download()
+			article.parse()
+	except:
+			continue
+
 	article.nlp()
 	if userinput in article.keywords:
-		print(article.title)
-		file = open('news_summary.txt', 'a')
-		file.write("Title: " + str(article.title) + "- Author(s): " + str(article.authors)+ '\n' + '\n')
-		file.close
+		
+		Author = article.authors
+		Title = article.title
+		Summary = article.summary
+		WriteNews(Title, Author, Summary)
 	elif not userinput:
-		print(article.title)
-		file = open('news_summary.txt', 'a')
-		file.write("Title: " + str(article.title) + "- Author(s): " + str(article.authors) + '\n' + '\n')
-		file.close
+		Author = article.authors
+		Title = article.title
+		Summary = article.summary
+		WriteNews(Title, Author, Summary)
 
 
+
+##Edge.org Scrape
+for article in edgeNews_paper.articles:
+	try:
+			article.download()
+			article.parse()
+	except:
+			continue
+
+	article.nlp()
+	if userinput in article.keywords:
+		
+		Author = article.authors
+		Title = article.title
+		Summary = article.summary
+		WriteNews(Title, Author, Summary)
+	elif not userinput:
+		Author = article.authors
+		Title = article.title
+		Summary = article.summary
+		WriteNews(Title, Author, Summary)
+
+
+
+##CNN Scrape
+for article in cnn_paper.articles:
+	try:
+			article.download()
+			article.parse()
+	except:
+			continue
+
+	article.nlp()
+	if userinput in article.keywords:
+		
+		Author = article.authors
+		Title = article.title
+		Summary = article.summary
+		WriteNews(Title, Author, Summary)
+	elif not userinput:
+		Author = article.authors
+		Title = article.title
+		Summary = article.summary
+		WriteNews(Title, Author, Summary)
+		
+
+Document.close()
