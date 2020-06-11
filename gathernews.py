@@ -20,7 +20,7 @@ cnn_paper = newspaper.build('https://www.cnn.com/', memoize_articles = False)
 
 #Function
 def WriteNews(Title, Author, Summary):
-	Document.write("Title: " + Title + "-" + "Author(s)" +str(Author))
+	Document.write("Title: " + Title + "-" + "Author(s)" +str(Author) + '\n')
 	Document.write(Summary)
 	Document.write('\n' + " ")
 	Document.write('\n')
@@ -35,10 +35,11 @@ for article in NPR_paper.articles:
 	try:
 			article.download()
 			article.parse()
+			article.nlp()
 	except:
 			continue
 
-	article.nlp()
+	
 	if userinput in article.keywords:
 		
 		Author = article.authors
@@ -58,10 +59,11 @@ for article in edgeNews_paper.articles:
 	try:
 			article.download()
 			article.parse()
+			article.nlp()
 	except:
 			continue
 
-	article.nlp()
+	
 	if userinput in article.keywords:
 		
 		Author = article.authors
@@ -81,10 +83,11 @@ for article in cnn_paper.articles:
 	try:
 			article.download()
 			article.parse()
+			article.nlp()
 	except:
 			continue
 
-	article.nlp()
+	
 	if userinput in article.keywords:
 		
 		Author = article.authors
